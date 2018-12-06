@@ -6,10 +6,11 @@
         _AccentColor ("Accent Color", Color) = (0.5, 0.5, 0.5, 1)
         _MainTex ("Texture", 2D) = "white" { }
         _DistortTex ("Distorion Texture", 2D) = "white" { }
+        _Exposition ("_Exposition", float) = 1.0
 
         _Slider ("Slider", Range (0,2)) = 0.0
         [Toggle(USEDEPTH)]_useDepth ("Toggle Soft Particles", float) = 0.0
-         _InvFade ("Soft Particles Factor", Range(0.01, 3.0)) = 1.0
+        _InvFade ("Soft Particles Factor", Range(0.01, 3.0)) = 1.0
 
         
     }
@@ -71,6 +72,7 @@
             fixed4 _MainColor;
             fixed4 _AccentColor;
             fixed _Slider;
+            fixed _Exposition;
             
             v2f vert(appdata v)
             {
@@ -114,6 +116,7 @@
                 half2 base = i.color * tex2D(_MainTex, i.uv.zw).rg;
 
                 half4 col = base.r * _MainColor + _AccentColor * base.g;
+                col.rgb *= _Exposition;
 
                 return col;
             }
